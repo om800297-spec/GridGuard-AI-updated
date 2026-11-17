@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GridGuard AI | Electricity Intelligence</title><link rel="stylesheet" href="/static/css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script></head>
+<body>
+<div id="loginView" class="login-wrap"><div class="login-card">
+  <div class="brand-mark">⚡</div><p class="eyebrow">INTELLIGENT ENERGY PLATFORM</p><h1>GridGuard <span>AI</span></h1>
+  <p class="muted">Monitor. Predict. Optimize.</p>
+  <form id="loginForm"><label>Email</label><input id="email" type="email" value="admin@gridguard.ai" required>
+  <label>Password</label><input id="password" type="password" value="Admin@123" required>
+  <button class="primary full">Sign in to dashboard</button></form>
+  <div class="demo-hint"><b>Demo accounts</b><br>Admin: admin@gridguard.ai / Admin@123<br>User: user@gridguard.ai / User@123</div>
+  <p id="loginError" class="error"></p></div></div>
+<div id="appView" class="app hidden">
+  <aside class="sidebar"><div class="logo"><span>⚡</span> GridGuard <b>AI</b></div>
+    <div class="side-label">WORKSPACE</div>
+    <button class="nav active" data-page="overview">▦ <span>Overview</span></button>
+    <button class="nav" data-page="meters">◉ <span>Smart meters</span></button>
+    <button class="nav" data-page="theft">⌁ <span>Theft detection</span></button>
+    <button class="nav" data-page="outages">⌁ <span>Outage prediction</span></button>
+    <button class="nav" data-page="forecast">⌁ <span>Demand forecast</span></button>
+    <button class="nav" data-page="energy">✧ <span>Energy optimizer</span></button>
+    <button class="nav" data-page="waste">◒ <span>Energy waste prediction</span></button>
+    <button class="nav" data-page="billing">₹ <span>Bill estimator</span></button>
+    <div class="side-bottom"><div class="avatar" id="avatar">A</div><div><b id="sideName">Admin</b><small id="sideRole">Administrator</small></div><button id="logoutBtn" title="Sign out">↗</button></div>
+  </aside>
+  <main class="main"><header class="topbar"><div><p class="eyebrow">ELECTRICITY INTELLIGENCE</p><h2 id="pageTitle">Overview</h2></div><div class="top-actions"><span class="live-dot"></span><span>Demo environment</span><button id="reportBtn" class="outline">↓ Export report</button></div></header>
+    <section id="page-overview" class="page">
+      <div class="welcome"><div><p class="eyebrow">CONTROL CENTER</p><h1>Good to see you, <span id="welcomeName">Admin</span></h1><p class="muted">Here’s your electricity network at a glance.</p></div><div class="date-chip">⚡ Grid status · Simulation</div></div>
+      <div class="stats">
+        <div class="stat"><div class="stat-icon blue">◉</div><span>Total meters</span><strong id="totalMeters">—</strong><small>Registered sample meters</small></div>
+        <div class="stat"><div class="stat-icon violet">ϟ</div><span>Energy monitored</span><strong id="totalUnits">—</strong><small>kWh in sample history</small></div>
+        <div class="stat"><div class="stat-icon orange">⌁</div><span>Open alerts</span><strong id="openAlerts">—</strong><small>Require human review</small></div>
+        <div class="stat"><div class="stat-icon green">◌</div><span>Avg. reading</span><strong id="avgReading">—</strong><small>kWh per meter-day</small></div>
+      </div>
+      <div class="grid-two"><div class="panel"><div class="panel-head"><div><h3>Consumption overview</h3><p>Daily energy usage · kWh</p></div><span class="tag">14 days</span></div><canvas id="consumptionChart" height="115"></canvas></div>
+      <div class="panel"><div class="panel-head"><div><h3>Network distribution</h3><p>Sample meters by area</p></div></div><canvas id="areaChart" height="180"></canvas></div></div>
+      <div class="panel"><div class="panel-head"><div><h3>Quick actions</h3><p>Run an analysis or review the network</p></div></div><div class="quick-actions"><button data-go="theft">⌁ Run theft scan</button><button data-go="forecast">↗ View forecast</button><button data-go="billing">₹ Estimate bill</button><button data-go="energy">✧ Optimize energy</button><button data-go="waste">◒ Predict energy waste</button></div></div>
+      <div class="notice">ⓘ <b>Research prototype:</b> Data is synthetic/demo data. Anomaly flags are not proof of theft, and outage estimates are not operational warnings.</div>
+    </section>
+    <section id="page-meters" class="page hidden"><div class="panel"><div class="panel-head"><div><h3>Smart meter registry</h3><p>Consumption summary by meter</p></div><input id="meterSearch" class="search" placeholder="Search meter or area..."></div><div class="table-wrap"><table><thead><tr><th>Meter ID</th><th>Customer</th><th>Area</th><th>Type</th><th>Total units</th></tr></thead><tbody id="meterRows"></tbody></table></div></div></section>
+    <section id="page-theft" class="page hidden"><div class="panel"><div class="panel-head"><div><h3>AI anomaly screening</h3><p>Isolation Forest · Unusual consumption patterns</p></div><button id="scanBtn" class="primary admin-only">Run scan & save alerts</button></div><div class="notice">Anomaly detection helps prioritize checks. It cannot establish electricity theft without field verification.</div><div id="theftSummary" class="summary-line"></div><div class="table-wrap"><table><thead><tr><th>Meter</th><th>Date</th><th>Units</th><th>Risk score</th><th>Pattern</th></tr></thead><tbody id="theftRows"></tbody></table></div></div></section>
+    <section id="page-outages" class="page hidden"><div class="panel"><div class="panel-head"><div><h3>Area outage risk</h3><p>Historical outage and weather-pattern model</p></div><span class="tag">Illustrative model</span></div><div id="outageCards" class="risk-grid"></div><div class="notice">Risk scores are experimental estimates from sample records, not predictions of a real utility outage.</div></div></section>
+    <section id="page-forecast" class="page hidden"><div class="panel"><div class="panel-head"><div><h3>Electricity demand forecast</h3><p>Next 7 days · Random Forest regression</p></div><span class="tag">Model estimate</span></div><canvas id="forecastChart" height="115"></canvas><div class="table-wrap"><table><thead><tr><th>Forecast date</th><th>Predicted demand (kWh)</th></tr></thead><tbody id="forecastRows"></tbody></table></div></div></section>
+    <section id="page-energy" class="page hidden"><div class="panel"><div class="panel-head"><div><h3>Energy optimization</h3><p>Actionable suggestions based on usage trends</p></div><span class="tag">AI-assisted</span></div><div id="recommendations" class="recommendations"></div></div></section>
+    <section id="page-waste" class="page hidden"><div class="panel"><div class="panel-head"><div><h3>Potential energy waste prediction</h3><p>Recent 7-day usage compared with each meter's previous 21-day baseline</p></div><button id="wasteRefresh" class="outline">↻ Refresh analysis</button></div><div class="stats" style="grid-template-columns:repeat(2,1fr)"><div class="stat"><span>Meters with unusual increase</span><strong id="wasteCount">—</strong><small>Usage is at least 10% above baseline</small></div><div class="stat"><span>Projected extra use / 7 days</span><strong id="wasteTotal">—</strong><small>kWh across flagged sample meters</small></div></div><div class="notice" id="wasteNote">Analysis uses sample readings.</div><div class="table-wrap"><table><thead><tr><th>Meter</th><th>Baseline / day</th><th>Recent / day</th><th>Increase</th><th>Extra / 7 days</th><th>Risk</th></tr></thead><tbody id="wasteRows"></tbody></table></div></div></section>
+    <section id="page-billing" class="page hidden"><div class="billing-layout"><div class="panel"><h3>Electricity bill estimator</h3><p class="muted">Adjust usage and rate to estimate charges.</p><label>Monthly consumption (kWh)</label><input id="billUnits" type="number" min="0" value="150"><label>Energy rate (₹ / kWh)</label><input id="billRate" type="number" min="0" step=".1" value="6.5"><button id="calculateBill" class="primary full">Calculate estimate</button><p class="muted tiny">Demo tariff: ₹6.50/kWh + ₹80 fixed charge + 5% illustrative tax.</p></div><div class="panel bill-result"><p class="eyebrow">ESTIMATED MONTHLY BILL</p><strong id="billTotal">₹—</strong><div id="billBreakdown"></div><div class="notice">Actual charges vary by DISCOM, tariff slab, duties and applicable subsidies.</div></div></div></section>
+  </main>
+</div><div id="toast" class="toast"></div><script src="/static/js/dashboard.js"></script></body></html>
